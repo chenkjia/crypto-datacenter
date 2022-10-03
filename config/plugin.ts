@@ -6,6 +6,11 @@ const plugin: EggPlugin = {
   //   enable: true,
   //   package: 'egg-view-nunjucks',
   // },
+  // egg-mongoose插件配置
+  mongoose: {
+    enable: true,
+    package: 'egg-mongoose',
+  },
 };
 
 export default plugin;

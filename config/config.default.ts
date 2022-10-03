@@ -15,6 +15,19 @@ export default (appInfo: EggAppInfo) => {
     sourceUrl: `https://github.com/eggjs/examples/tree/master/${appInfo.name}`,
   };
 
+  // 由于只考虑演示，此处关闭csrf防御
+  config.security = {
+    csrf: {
+      enable: false,
+    },
+  };
+  // 连接数据库
+  config.mongoose = {
+    client: {
+      url: 'mongodb://127.0.0.1/crypto',
+      options: {},
+    },
+  };
   // the return config will combines to EggAppConfig
   return {
     ...config,

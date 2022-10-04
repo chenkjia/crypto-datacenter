@@ -12,6 +12,7 @@ logs/
 *.lock
 *.js
 !.autod.conf.js
+config.mongodb.json
 
 app/**/*.js
 test/**/*.js

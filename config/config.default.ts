@@ -1,4 +1,5 @@
 import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg';
+import mongodb from './config.mongodb.json';
 
 export default (appInfo: EggAppInfo) => {
   const config = {} as PowerPartial<EggAppConfig>;
@@ -22,12 +23,7 @@ export default (appInfo: EggAppInfo) => {
     },
   };
   // 连接数据库
-  config.mongoose = {
-    client: {
-      url: 'mongodb://127.0.0.1/crypto',
-      options: {},
-    },
-  };
+  config.mongoose = mongodb;
   // the return config will combines to EggAppConfig
   return {
     ...config,

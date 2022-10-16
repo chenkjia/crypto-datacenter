@@ -6,14 +6,16 @@ module.exports = app => {
   const schema = new Schema({
     market: { type: String },
     from: { type: String },
-    gas: { type: Number },
-    gasPrice: { type: Number },
-    maxFeePerGas: { type: Number },
-    maxPriorityFeePerGas: { type: Number },
+    gas: { type: String },
+    gasPrice: { type: String },
+    maxFeePerGas: { type: String },
+    maxPriorityFeePerGas: { type: String },
     hash: { type: String },
     funcName: { type: String },
-    amountIn: { type: Number },
-    amountOutMin: { type: Number },
+    amountIn: { type: String },
+    amountOutMin: { type: String },
+    amountInNumber: { type: Number },
+    amountOutMinNumber: { type: Number },
     input: { type: String },
     nonce: { type: String },
     to: { type: String },
@@ -23,6 +25,7 @@ module.exports = app => {
     chainId: { type: String },
     collectTime: { type: Date, default: Date.now },
     createTime: { type: Date, default: Date.now },
+
   });
 
   return mongoose.model('Target', schema, 'target');

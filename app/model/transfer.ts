@@ -24,6 +24,8 @@ module.exports = app => {
     r: { type: String },
     s: { type: String },
     createTime: { type: Date, default: Date.now },
+    reserve0: { type: String },
+    reserve1: { type: String },
   });
 
   return mongoose.model('Transfer', schema, 'transfer');

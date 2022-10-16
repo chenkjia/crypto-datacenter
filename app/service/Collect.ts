@@ -1,7 +1,24 @@
 import { Service } from 'egg';
 import { Network, Alchemy } from 'alchemy-sdk';
 import Web3 from 'web3';
+import { ethers } from 'ethers';
 const web3 = new Web3();
+import IUniswapV2PairAbi from './abi/IUniswapV2Pair.json';
+export const wssProvider = new ethers.providers.WebSocketProvider(
+  'wss://eth-mainnet.g.alchemy.com/v2/VP8HbkayBbeQqFjOLXUg69snsiQKNhWG',
+);
+// Used to send transactions, needs ether
+export const searcherWallet = new ethers.Wallet(
+  '0000000000000000000000000000000000000000000000000000000000000001',
+  wssProvider,
+);
+// Common contracts
+const uniswapV2Pair = new ethers.Contract(
+  ethers.constants.AddressZero,
+  IUniswapV2PairAbi,
+  searcherWallet,
+);
+
 
 // Optional Config object, but defaults to demo api-key and eth-mainnet.
 const settings = {
@@ -94,14 +111,19 @@ export default class Collect extends Service {
           method: 'alchemy_pendingTransactions',
           toAddress: address,
         },
-        res => {
+        async res => {
           if (
             res.input.indexOf('1e4ede388cbc9f4b5c79681b7f94d36a11abebc9') !== -1
           ) {
+            const [ reserve0, reserve1 ] = await uniswapV2Pair.attach('0x6033368e4a402605294c91cf5c03d72bd96e7d8d').getReserves();
             this.ctx.model.Transfer.create({
               ...res,
               market: name,
+              reserve0: reserve0.toHexString(),
+              reserve1: reserve1.toHexString(),
             });
+            console.log(reserve0);
+            console.log(reserve1);
             console.log(name);
             console.log(res);
             console.log(new Date());
